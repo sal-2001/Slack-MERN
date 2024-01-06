@@ -1,9 +1,11 @@
 const express = require("express");
 const http = require("http");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 // const socketio = require("socket.io");
 // const cors = require("cors");
 const path = require("path");
+const { error } = require("console");
 
 const STATIC_FOLDER = "/";
 const PORT = process.env.PORT || 8000;
@@ -28,12 +30,15 @@ const server = http.createServer(app);
 //   console.log("someone connected");
 //   socketController(socket);
 // });
+app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
 
 app.get("/", (req, res) => {
   res.send("API running successfully");
 });
 
-app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
+mongoose.connect(process.env.MONGO).then(()=>{
+  console.log('Connected to MongoDB!');
+}).catch((error)=>console.log(error));
 
 // app.use("/api", registerRouter);
 
