@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
   res.send("API running successfully");
 });
 
-mongoose.connect(process.env.MONGO).then(()=>{
+mongoose.connect(process.env.MONGODB_URL).then(()=>{
   console.log('Connected to MongoDB!');
 }).catch((error)=>console.log(error));
 
