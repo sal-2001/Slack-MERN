@@ -5,15 +5,14 @@ const mongoose = require("mongoose");
 // const socketio = require("socket.io");
 // const cors = require("cors");
 const path = require("path");
-const { error } = require("console");
+const logger = require("morgan");
 
 const STATIC_FOLDER = "/";
 const PORT = process.env.PORT || 8000;
 
 dotenv.config();
 
-// const registerRouter = require("./routes/registerRouter");
-// const { socketController } = require("./controllers/socketController.js");
+const chatRoutes = require("./routes/chat");
 
 const app = express();
 const server = http.createServer(app);
@@ -31,16 +30,22 @@ const server = http.createServer(app);
 //   socketController(socket);
 // });
 app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
+app.use(express.json());
+
+app.use(logger("dev"));
 
 app.get("/", (req, res) => {
   res.send("API running successfully");
 });
 
-mongoose.connect(process.env.MONGODB_URL).then(()=>{
-  console.log('Connected to MongoDB!');
-}).catch((error)=>console.log(error));
+app.use("/api/chat", chatRoutes);
 
-// app.use("/api", registerRouter);
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log("Connected to MongoDB!");
+  })
+  .catch((error) => console.log(error));
 
 server.listen(PORT, () => {
   console.log("Server listening on ", PORT);
