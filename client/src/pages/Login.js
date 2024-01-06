@@ -3,11 +3,14 @@ import "../styles/login.css";
 import chat_image from "../assets/chatting_illustration.jpg";
 import { useNavigate } from "react-router-dom";
 import { isValid } from "../utils/register";
+import axios from "axios";
+import { signUpUser, signInUser } from "../services/user";
 
 const freshData = {
-  username: "",
   name: "",
+  email: "",
   password: "",
+  phone: "",
 };
 
 function Login() {
@@ -20,10 +23,18 @@ function Login() {
     temp[field] = value;
     setData(temp);
   };
-  const submit = () => {
-    if (!isValid(data, isLogin)) return;
-    console.log("data=>", data);
-    navigate("/chat");
+  const submit = async (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      const userData = { email: data.email, password: data.password };
+      signInUser(userData)
+        .then(() => navigate("/chat"))
+        .catch((error) => console.log(error));
+    } else {
+      signUpUser(data)
+        .then(() => navigate("/chat"))
+        .catch((error) => console.log(error));
+    }
   };
   const changeMode = () => {
     setIsLogin((flag) => !flag);
@@ -76,11 +87,11 @@ const RegisterFields = ({ updater, data, isLogin }) => {
       <div className="text_field">
         {/* <label htmlFor="username">Username : </label> */}
         <input
-          type="text"
-          id="username"
-          placeholder="Username..."
-          value={data.username}
-          onChange={(e) => updater("username", e.target.value)}
+          type="email"
+          id="email"
+          placeholder="Email..."
+          value={data.email}
+          onChange={(e) => updater("email", e.target.value)}
         />
       </div>
       {!isLogin && (
@@ -88,18 +99,30 @@ const RegisterFields = ({ updater, data, isLogin }) => {
           {/* <label htmlFor="name">Name : </label> */}
           <input
             type="text"
-            id="=name"
+            id="name"
             placeholder="Your full name..."
             value={data.name}
             onChange={(e) => updater("name", e.target.value)}
           />
         </div>
       )}
+      {!isLogin && (
+        <div className="text_field">
+          {/* <label htmlFor="name">Name : </label> */}
+          <input
+            type="text"
+            id="phone"
+            placeholder="Phone numer..."
+            value={data.phone}
+            onChange={(e) => updater("phone", e.target.value)}
+          />
+        </div>
+      )}
       <div className="text_field">
         {/* <label htmlFor="password1">Password : </label> */}
         <input
-          type="text"
-          id="password1"
+          type="password"
+          id="password"
           placeholder="Password..."
           value={data.password}
           onChange={(e) => updater("password", e.target.value)}
