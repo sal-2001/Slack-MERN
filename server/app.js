@@ -1,8 +1,12 @@
 const express = require("express");
 const http = require("http");
+const dotenv = require("dotenv");
+dotenv.config();
+const mongoose = require("mongoose");
 // const socketio = require("socket.io");
 // const cors = require("cors");
 const path = require("path");
+const { error } = require("console");
 
 const STATIC_FOLDER = "/";
 // const registerRouter = require("./routes/registerRouter");
@@ -24,7 +28,9 @@ const server = http.createServer(app);
 //   console.log("someone connected");
 //   socketController(socket);
 // });
-
+mongoose.connect(process.env.MONGO).then(()=>{
+  console.log('Connected to MongoDB!');
+}).catch((error)=>console.log(error));
 app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
 
 // app.use("/api", registerRouter);
