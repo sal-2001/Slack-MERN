@@ -1,10 +1,11 @@
 export const addUser = (dispatch, data) => {
   dispatch({
     type: "ADD_USER",
-    data: data,
+    user: {
+      name: data.name,
+      email: data.email,
+      phone: data?.phone,
+      photo: data.avatar,
+    },
   });
-};
-
-export const login = (dispatch, data) => {
-  
 };

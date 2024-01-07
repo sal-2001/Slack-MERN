@@ -4,9 +4,11 @@ import { app } from "../firebase";
 import { googleSignIn } from "../services/user";
 import useStateValue from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { addUser } from "../context/actions/register";
+
 export default function OAuth() {
   const navigate = useNavigate();
-  const [{ user }, dispatch] = useStateValue();
+  const [_, dispatch] = useStateValue();
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -20,14 +22,11 @@ export default function OAuth() {
       };
       googleSignIn(userData)
         .then((data) => {
-          dispatch({
-            type: "ADD_USER",
-            user: {
-              name: data.name,
-              email: data.email,
-              phone: data?.phone,
-              photo: data.avatar,
-            },
+          addUser(dispatch, {
+            name: data.name,
+            email: data.email,
+            phone: data?.phone,
+            photo: data.avatar,
           });
           navigate("/chat");
         })
