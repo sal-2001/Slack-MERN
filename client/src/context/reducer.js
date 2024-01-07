@@ -1,7 +1,11 @@
 export const initialState = {
-  username: "",
-  name: "",
-  rooms: [],
+  user: {
+    name: "",
+    email: "",
+    phone: "",
+    photo:
+      "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
+  },
 };
 
 const reducer = (state, action) => {
@@ -9,16 +13,23 @@ const reducer = (state, action) => {
     case "ADD_USER":
       return {
         ...state,
-        username: action.data.username,
-        name: action.data.name,
-        rooms: action.data.rooms,
+        user: {
+          name: action.data.name,
+          email: action.data.email,
+          phone: action.data.phone,
+          photo: action.data.photo,
+        },
       };
     case "REMOVE_USER":
       return {
         ...state,
-        username: "",
-        name: "",
-        rooms: "",
+        user: {
+          name: "",
+          email: "",
+          phone: "",
+          photo:
+            "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
+        },
       };
     default:
       return state;
