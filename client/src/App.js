@@ -1,13 +1,13 @@
 import React from "react";
 import "./styles/App.css";
-// import Chat from "./Pages/chat/index";
+import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import io from "socket.io-client";
+import io from "socket.io-client";
 
-// const baseUrl = process.env.REACT_APP_BASEURL;
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
-// const socket = io(baseUrl);
+const socket = io(baseUrl);
 
 function App() {
   return (
@@ -15,13 +15,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/chat" element={<Chat socket={socket} />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
-}
-{
-  /* <Route path="/chat" element={<Chat socket={socket} />} /> */
 }
 
 export default App;
