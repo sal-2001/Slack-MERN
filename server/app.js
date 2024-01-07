@@ -3,7 +3,7 @@ const http = require("http");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const userRouter = require("./routes/user.js");
+// const userRouter = require("./routes/user.js");
 const authRouter = require("./routes/auth.js");
 // const socketio = require("socket.io");
 // const cors = require("cors");
@@ -36,7 +36,7 @@ app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
 app.use(express.json());
 app.use(logger("dev"));
 
-app.use("/api/user", userRouter);
+// app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/chat", chatRoutes);
 app.use((err, req, res) => {
