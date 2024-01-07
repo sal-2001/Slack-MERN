@@ -3,11 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "../styles/chat.css";
 import TopBar from "../components/TopBar";
 import MessageContainer from "../components/MessageContainer";
+import io from "socket.io-client";
 
-function Chat({ socket }) {
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+function Chat() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [chats, setChats] = useState([]);
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    let socketInstance = io(BASE_URL);
+    setSocket(socketInstance);
+  }, []);
 
   useEffect(() => {
     // const username = localStorage.getItem("username");
@@ -16,6 +25,7 @@ function Chat({ socket }) {
   }, []);
 
   useEffect(() => {
+    if (!socket) return;
     socket.on("connect", () => {
       console.log("connected to backend");
       if (!name) return;
