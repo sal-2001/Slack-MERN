@@ -1,4 +1,4 @@
-import ProfileIcon from "./assets/ProfileIcon.jpg"
+import ProfileIcon from "../assets/ProfileIcon.jpg"
 export const initialState = {
   user: {
     name: "",
