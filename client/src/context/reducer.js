@@ -1,10 +1,10 @@
+import ProfileIcon from "../assets/ProfileIcon.jpg"
 export const initialState = {
   user: {
     name: "",
     email: "",
     phone: "",
-    photo:
-      "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
+    photo: ProfileIcon
   },
 };
 
@@ -27,8 +27,7 @@ const reducer = (state, action) => {
           name: "",
           email: "",
           phone: "",
-          photo:
-            "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
+          photo: ProfileIcon
         },
       };
     default:
