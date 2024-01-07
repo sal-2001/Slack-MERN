@@ -17,3 +17,12 @@ export const signInUser = async (data)=>{
     return;
   }
 }
+export const googleSignIn = async(data)=>{
+  const res = await axios.post(`${BASE_URL}/auth/google`,data);
+  if(res.success===false)
+  {
+    console.log(res.message);
+    return;
+  }
+  return res;
+}

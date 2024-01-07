@@ -17,8 +17,12 @@ const UserSchema = Mongoose.Schema(
     },
     phone: {
       type: Number,
-      required: true,
       unique: true,
+    },
+    avatar: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dptno80n9/image/upload/v1704610214/slackmern/ProfileIcon_dmcba9.jpg",
     },
   },
   { timestamps: true }

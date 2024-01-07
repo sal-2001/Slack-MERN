@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { isValid } from "../utils/register";
 import axios from "axios";
 import { signUpUser, signInUser } from "../services/user";
+import OAuth from "../components/OAuth";
 
 const freshData = {
   name: "",
@@ -55,6 +56,7 @@ function Login() {
           <button className="login_button" onClick={submit}>
             Start Chat
           </button>
+          <OAuth/>
         </div>
         <div style={{ marginTop: "10px" }}>
           {isLogin ? (
