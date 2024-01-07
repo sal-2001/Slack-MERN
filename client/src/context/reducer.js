@@ -14,10 +14,10 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: {
-          name: action.data.name,
-          email: action.data.email,
-          phone: action.data.phone,
-          photo: action.data.photo,
+          name: action.user.name,
+          email: action.user.email,
+          phone: action.user.phone,
+          photo: action.user.photo,
         },
       };
     case "REMOVE_USER":

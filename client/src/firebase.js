@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyASWZi29S4dNi8LEqcGEWqCuRny1PgbEko",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "slack-mern-sss.firebaseapp.com",
   projectId: "slack-mern-sss",
   storageBucket: "slack-mern-sss.appspot.com",

@@ -6,17 +6,19 @@ import { isValid } from "../utils/register";
 import axios from "axios";
 import { signUpUser, signInUser } from "../services/user";
 import OAuth from "../components/OAuth";
-
+import useStateValue from "../context/AppContext";
 const freshData = {
   name: "",
   email: "",
   password: "",
   phone: "",
+  photo: "",
 };
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [data, setData] = useState(freshData);
+  const [{ user }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const updater = (field, value) => {
@@ -29,11 +31,34 @@ function Login() {
     if (isLogin) {
       const userData = { email: data.email, password: data.password };
       signInUser(userData)
-        .then(() => navigate("/chat"))
+        .then((data) => {
+          dispatch({
+            type: "ADD_USER",
+            user: {
+              name: data.name,
+              email: data.email,
+              phone: data?.phone,
+              photo: data.avatar,
+            },
+          });
+          navigate("/chat");
+        })
         .catch((error) => console.log(error));
     } else {
       signUpUser(data)
-        .then(() => navigate("/chat"))
+        .then((data) => {
+          console.log('data',data);
+          dispatch({
+            type: "ADD_USER",
+            user: {
+              name: data.name,
+              email: data.email,
+              phone: data?.phone,
+              photo: data.avatar,
+            },
+          });
+          navigate("/chat");
+        })
         .catch((error) => console.log(error));
     }
   };
@@ -56,7 +81,7 @@ function Login() {
           <button className="login_button" onClick={submit}>
             Start Chat
           </button>
-          <OAuth/>
+          <OAuth />
         </div>
         <div style={{ marginTop: "10px" }}>
           {isLogin ? (

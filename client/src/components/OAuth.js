@@ -2,40 +2,36 @@ import React from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { googleSignIn } from "../services/user";
+import useStateValue from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 export default function OAuth() {
+  const navigate = useNavigate();
+  const [{ user }, dispatch] = useStateValue();
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
       const userData = {
         name: result.user.displayName,
         email: result.user.email,
         photo: result.user.photoURL,
       };
       googleSignIn(userData)
-        .then(() => {
-          console.log("google sign in done");
+        .then((data) => {
+          dispatch({
+            type: "ADD_USER",
+            user: {
+              name: data.name,
+              email: data.email,
+              phone: data?.phone,
+              photo: data.avatar,
+            },
+          });
+          navigate("/chat");
         })
         .catch((error) => console.log(error));
-
-      //   const res = await fetch("/api/auth/google", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       name: result.user.displayName,
-      //       email: result.user.email,
-      //       photo: result.user.photoURL,
-      //     }),
-      //   });
-
-      //   const data = await res.json();
-      //   dispatch(signInSuccess(data));
-      //   navigate("/");
     } catch (error) {
       console.log("Could not signin with google!", error);
     }

@@ -1,28 +1,40 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8000/api";
 
-export const signUpUser = async (data)=>{
-    const res = await axios.post(`${BASE_URL}/auth/signup`,data);
-    if(res.success===false)
-    {
+
+export const signUpUser = async (data) => {
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/signup`, data);
+    if (res.success === false) {
       console.log(res.message);
       return;
     }
-} 
-export const signInUser = async (data)=>{
-  const res = await axios.post(`${BASE_URL}/auth/signin`,data);
-  if(res.success===false)
-  {
-    console.log(res.message);
-    return;
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
-}
-export const googleSignIn = async(data)=>{
-  const res = await axios.post(`${BASE_URL}/auth/google`,data);
-  if(res.success===false)
-  {
-    console.log(res.message);
-    return;
+
+};
+export const signInUser = async (data) => {
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/signin`, data);
+    if (res.success === false) {
+      console.log(res.message);
+      return;
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
-  return res;
-}
+};
+export const googleSignIn = async (data) => {
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/google`, data);
+    if (res.success === false) {
+      console.log(res.message);
+      return;
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
