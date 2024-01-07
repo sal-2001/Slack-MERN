@@ -3,14 +3,15 @@ const http = require("http");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-// const userRouter = require("./routes/user.js");
-const authRouter = require("./routes/auth.js");
 // const socketio = require("socket.io");
 // const cors = require("cors");
 const path = require("path");
 const logger = require("morgan");
 
+const authRouter = require("./routes/auth");
+// const userRouter = require("./routes/user.js");
 const chatRoutes = require("./routes/chat");
+const messageRoutes = require("./routes/message");
 
 const STATIC_FOLDER = "/";
 const PORT = process.env.PORT || 8000;
@@ -39,6 +40,7 @@ app.use(logger("dev"));
 // app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
