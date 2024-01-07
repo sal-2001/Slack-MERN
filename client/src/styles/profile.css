@@ -20,9 +20,10 @@
 }
 .imageContainer{
     display: flex;
-    height: 70px;
-    width: 70px;
-
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 .profilePhoto{
     height: 70px;
@@ -40,7 +41,7 @@
     width: 100%;
 }
 .profileLabel{
-    font-size: 15px;
+    font-size: 14px;
 }
 .profileInput{
     border: none;
@@ -55,10 +56,20 @@
     border: none;
     cursor: pointer;
     padding: 10px;
+    border-radius: 5px;
 }
 .edit{
     background-color: red;
 }
 .updateButton:hover{
     opacity: 80%;
+}
+.imageUploadText{
+    font-size: 13px;
+}
+.uploading{
+    color: black;
+}
+.uploaded{
+    color: green;
 }

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const path = require("path");
 const logger = require("morgan");
-
+const cookieParser = require('cookie-parser');
 const authRouter = require("./routes/auth");
 // const userRouter = require("./routes/user.js");
 const chatRoutes = require("./routes/chat");
@@ -20,6 +20,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
 app.use(express.json());
 app.use(logger("dev"));

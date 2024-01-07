@@ -38,3 +38,7 @@ export const googleSignIn = async (data) => {
     console.log(error);
   }
 };
+
+export const userUpdate = async(data)=>{
+  
+}
