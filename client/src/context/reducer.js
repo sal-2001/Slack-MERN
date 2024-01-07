@@ -6,6 +6,7 @@ export const initialState = {
     phone: "",
     photo: ProfileIcon
   },
+  isLoggedIn: false,
 };
 
 const reducer = (state, action) => {
@@ -19,6 +20,7 @@ const reducer = (state, action) => {
           phone: action.user.phone,
           photo: action.user.photo,
         },
+        isLoggedIn: true,
       };
     case "REMOVE_USER":
       return {
@@ -29,6 +31,7 @@ const reducer = (state, action) => {
           phone: "",
           photo: ProfileIcon
         },
+        isLoggedIn: false,
       };
     default:
       return state;

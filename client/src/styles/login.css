@@ -74,7 +74,14 @@
   background-color: #59e4a8;
   color: white;
 }
-
+.google{
+  background-color: darkgreen;
+  color: white;
+}
+.google:hover{
+  background-color: darkgreen;
+  opacity: 80% !important;
+}
 .modechanger {
   color: white;
 }

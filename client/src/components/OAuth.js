@@ -1,6 +1,7 @@
 import React from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
+import "../styles/login.css";
 import { googleSignIn } from "../services/user";
 import useStateValue from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -35,5 +36,5 @@ export default function OAuth() {
       console.log("Could not signin with google!", error);
     }
   };
-  return <button onClick={handleGoogleClick}>OAuth</button>;
+  return <button className="login_button google"  onClick={handleGoogleClick}>Continue with Google</button>;
 }
