@@ -1,10 +1,11 @@
-import ProfileIcon from "../assets/ProfileIcon.jpg"
+import ProfileIcon from "../assets/ProfileIcon.jpg";
 export const initialState = {
   user: {
+    userId: "",
     name: "",
     email: "",
     phone: "",
-    photo: ProfileIcon
+    photo: ProfileIcon,
   },
   isLoggedIn: false,
 };
@@ -15,6 +16,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: {
+          userId: action.user.userId,
           name: action.user.name,
           email: action.user.email,
           phone: action.user.phone,
@@ -29,7 +31,7 @@ const reducer = (state, action) => {
           name: "",
           email: "",
           phone: "",
-          photo: ProfileIcon
+          photo: ProfileIcon,
         },
         isLoggedIn: false,
       };

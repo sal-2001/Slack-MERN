@@ -23,12 +23,7 @@ export default function OAuth() {
       };
       googleSignIn(userData)
         .then((data) => {
-          addUser(dispatch, {
-            name: data.name,
-            email: data.email,
-            phone: data?.phone,
-            photo: data.avatar,
-          });
+          addUser(dispatch, data);
           navigate("/chat");
         })
         .catch((error) => console.log(error));
@@ -36,5 +31,9 @@ export default function OAuth() {
       console.log("Could not signin with google!", error);
     }
   };
-  return <button className="login_button google"  onClick={handleGoogleClick}>Continue with Google</button>;
+  return (
+    <button className="login_button google" onClick={handleGoogleClick}>
+      Continue with Google
+    </button>
+  );
 }

@@ -34,12 +34,7 @@ function Login() {
       const userData = { email: data.email, password: data.password };
       signInUser(userData)
         .then((data) => {
-          addUser(dispatch, {
-            name: data.name,
-            email: data.email,
-            phone: data?.phone,
-            photo: data.avatar,
-          });
+          addUser(dispatch, data);
           navigate("/chat");
         })
         .catch((error) => console.log(error));
@@ -47,12 +42,7 @@ function Login() {
       signUpUser(data)
         .then((data) => {
           console.log("data", data);
-          addUser(dispatch, {
-            name: data.name,
-            email: data.email,
-            phone: data?.phone,
-            photo: data.avatar,
-          });
+          addUser(dispatch, data);
           navigate("/chat");
         })
         .catch((error) => console.log(error));
