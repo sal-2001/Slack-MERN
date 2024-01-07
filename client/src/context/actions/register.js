@@ -1,10 +1,13 @@
 export const addUser = (dispatch, data) => {
+  console.log("adding user : ", data);
   dispatch({
     type: "ADD_USER",
-    data: data,
+    user: {
+      userId: data._id,
+      name: data.name,
+      email: data.email,
+      phone: data?.phone,
+      photo: data.avatar,
+    },
   });
-};
-
-export const login = (dispatch, data) => {
-  
 };

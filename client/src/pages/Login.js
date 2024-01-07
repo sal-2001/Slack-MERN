@@ -7,6 +7,8 @@ import axios from "axios";
 import { signUpUser, signInUser } from "../services/user";
 import OAuth from "../components/OAuth";
 import useStateValue from "../context/AppContext";
+import { addUser } from "../context/actions/register";
+
 const freshData = {
   name: "",
   email: "",
@@ -18,7 +20,7 @@ const freshData = {
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [data, setData] = useState(freshData);
-  const [{ user }, dispatch] = useStateValue();
+  const [_, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const updater = (field, value) => {
@@ -32,31 +34,15 @@ function Login() {
       const userData = { email: data.email, password: data.password };
       signInUser(userData)
         .then((data) => {
-          dispatch({
-            type: "ADD_USER",
-            user: {
-              name: data.name,
-              email: data.email,
-              phone: data?.phone,
-              photo: data.avatar,
-            },
-          });
+          addUser(dispatch, data);
           navigate("/chat");
         })
         .catch((error) => console.log(error));
     } else {
       signUpUser(data)
         .then((data) => {
-          console.log('data',data);
-          dispatch({
-            type: "ADD_USER",
-            user: {
-              name: data.name,
-              email: data.email,
-              phone: data?.phone,
-              photo: data.avatar,
-            },
-          });
+          console.log("data", data);
+          addUser(dispatch, data);
           navigate("/chat");
         })
         .catch((error) => console.log(error));
