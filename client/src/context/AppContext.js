@@ -9,6 +9,6 @@ export const AppContextProvider = ({ children }) => (
   </AppContext.Provider>
 );
 
-const StoreProvider = () => useContext(AppContext);
+const useStateValue = () => useContext(AppContext);
 
-export default StoreProvider;
+export default useStateValue;

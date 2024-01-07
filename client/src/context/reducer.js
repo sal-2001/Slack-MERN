@@ -1,7 +1,9 @@
 export const initialState = {
-  username: "",
-  name: "",
-  rooms: [],
+  user: {
+    name: "",
+    email: "",
+    phone: "",
+  },
 };
 
 const reducer = (state, action) => {
@@ -9,16 +11,20 @@ const reducer = (state, action) => {
     case "ADD_USER":
       return {
         ...state,
-        username: action.data.username,
-        name: action.data.name,
-        rooms: action.data.rooms,
+        user: {
+          name: action.data.name,
+          email: action.data.email,
+          phone: action.data.phone,
+        },
       };
     case "REMOVE_USER":
       return {
         ...state,
-        username: "",
-        name: "",
-        rooms: "",
+        user: {
+          name: "",
+          email: "",
+          phone: "",
+        },
       };
     default:
       return state;
