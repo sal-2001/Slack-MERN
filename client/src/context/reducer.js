@@ -3,6 +3,8 @@ export const initialState = {
     name: "",
     email: "",
     phone: "",
+    photo:
+      "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
   },
 };
 
@@ -15,6 +17,7 @@ const reducer = (state, action) => {
           name: action.data.name,
           email: action.data.email,
           phone: action.data.phone,
+          photo: action.data.photo,
         },
       };
     case "REMOVE_USER":
@@ -24,6 +27,8 @@ const reducer = (state, action) => {
           name: "",
           email: "",
           phone: "",
+          photo:
+            "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg",
         },
       };
     default:
