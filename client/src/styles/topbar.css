@@ -7,16 +7,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-}/*# sourceMappingURL=topbar.css.map */
-.userContainer{
+} 
+.userContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 100px;
   margin-right: 20px;
 }
-.userImage{
+
+.userImage {
   height: 40px;
   width: 40px;
   border-radius: 100px;
-}
+}/*# sourceMappingURL=topbar.css.map */

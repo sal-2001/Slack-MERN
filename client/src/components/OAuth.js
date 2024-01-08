@@ -23,7 +23,7 @@ export default function OAuth() {
       };
       googleSignIn(userData)
         .then((data) => {
-          addUser(dispatch, data);
+          addUser(dispatch, {...data,userId: data._id});
           navigate("/chat");
         })
         .catch((error) => console.log(error));

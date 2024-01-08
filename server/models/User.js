@@ -16,8 +16,8 @@ const UserSchema = Mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Number,
-      unique: true,
+      type: String,
+      default: "",
     },
     avatar: {
       type: String,

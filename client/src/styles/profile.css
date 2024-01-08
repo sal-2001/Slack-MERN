@@ -1,64 +1,101 @@
-/*# sourceMappingURL=profile.css.map */
-.profileContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 350px;
-    height: 500px;
-    background-color: rgb(219, 219, 219);
-    position: absolute;
-    top: 2%;
-    right: 1%;
-    border-radius: 20px;
-    padding: 10px;
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 350px;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: rgb(233, 233, 233);
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  border-radius: 20px;
+  padding: 30px 10px;
 }
-.profileTitle{
-    font-size: 20px;
-    margin-top: 10px;
-}
-.imageContainer{
-    display: flex;
-    height: 70px;
-    width: 70px;
 
+.closeIconContainer {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  cursor: pointer;
+  border-radius: 60px;
 }
-.profilePhoto{
-    height: 70px;
-    width: 70px;
-    border-radius: 100px;
-    object-fit: cover;
-    cursor: pointer;
+
+.closeIcon {
+  color: red;
+  font-size: 12px;
+  margin: 10px 10px;
 }
-.profileForm
-{
-    display: flex;
-    flex-direction: column;
-    padding: 0px 30px;
-    gap: 5px;
-    width: 100%;
+
+.profileTitle {
+  font-size: 20px;
+  margin-top: 10px;
 }
-.profileLabel{
-    font-size: 15px;
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
-.profileInput{
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    height: 30px;
-    margin-bottom: 10px;
+
+.profilePhoto {
+  height: 80px;
+  width: 80px;
+  border-radius: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
 }
-.updateButton{
-    color: white;
-    background-color: darkgreen;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
+
+.profileForm {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 30px;
+  gap: 5px;
+  width: 100%;
 }
-.edit{
-    background-color: red;
+
+.profileLabel {
+  font-size: 14px;
 }
-.updateButton:hover{
-    opacity: 80%;
+
+.profileInput {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  height: 30px;
+  margin-bottom: 10px;
 }
+
+.updateButton {
+  color: white;
+  background-color: darkgreen;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.edit {
+  background-color: red;
+}
+
+.updateButton:hover {
+  opacity: 80%;
+}
+
+.imageUploadText {
+  font-size: 13px;
+}
+
+.uploading {
+  color: black;
+}
+
+.uploaded {
+  color: green;
+}/*# sourceMappingURL=profile.css.map */

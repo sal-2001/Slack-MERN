@@ -7,8 +7,9 @@ const path = require("path");
 const logger = require("morgan");
 const { instrument } = require("@socket.io/admin-ui");
 
+const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth");
-// const userRouter = require("./routes/user.js");
+const userRouter = require("./routes/user");
 const chatRoutes = require("./routes/chat");
 const messageRoutes = require("./routes/message");
 
@@ -22,12 +23,14 @@ const ADMIN_SOCKETIO_UI = "https://admin.socket.io";
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, STATIC_FOLDER)));
 app.use(express.json());
 app.use(logger("dev"));
 
 // app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use((err, req, res, next) => {
