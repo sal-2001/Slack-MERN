@@ -4,6 +4,7 @@ import "../styles/chat.css";
 import TopBar from "../components/TopBar";
 import MessageContainer from "../components/MessageContainer";
 import io from "socket.io-client";
+import ChatSection from "../components/ChatSection";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -56,7 +57,9 @@ function Chat() {
         <TopBar />
       </div>
       <div className="main_section">
-        <div className="side_bar">{/* Component goes here */}</div>
+        <div className="side_bar">
+          <ChatSection />
+        </div>
         <div className="message_section">
           <MessageContainer chats={chats} sendMessage={sendMessage} />
         </div>

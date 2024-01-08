@@ -34,18 +34,17 @@ function Login() {
       const userData = { email: data.email, password: data.password };
       signInUser(userData)
         .then((data) => {
-          console.log("data signin", data);
-          addUser(dispatch, {...data,userId: data._id});
-          navigate("/chat");
+          addUser(dispatch, { ...data, userId: data._id });
         })
+        .then(() => navigate("/chat"))
         .catch((error) => console.log(error));
     } else {
       signUpUser(data)
         .then((data) => {
           console.log("data signup", data);
-          addUser(dispatch, {...data,userId: data._id});
-          navigate("/chat");
+          addUser(dispatch, { ...data, userId: data._id });
         })
+        .then(() => navigate("/chat"))
         .catch((error) => console.log(error));
     }
   };

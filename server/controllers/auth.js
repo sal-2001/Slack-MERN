@@ -1,7 +1,7 @@
 const User = require("../models/User.js");
 const bcryptjs = require("bcryptjs");
 const errorHandler = require("../utils/error.js");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const signup = async (req, res, next) => {
   const { name, email, password, phone } = req.body;
@@ -10,6 +10,13 @@ const signup = async (req, res, next) => {
 
   try {
     await newUser.save();
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+    const { password: pass, ...rest } = newUser._doc;
+
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
     res.status(201).json("User created successfully!");
   } catch (error) {
     next(error);
@@ -65,7 +72,7 @@ const google = async (req, res, next) => {
       });
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;
-      console.log('token',token);
+      console.log("token", token);
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
