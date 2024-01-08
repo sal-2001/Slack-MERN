@@ -5,10 +5,10 @@ function MessageBox({ chats }) {
   const myname = "shijith";
 
   return (
-    <div className="messageBox">
+    <div className="message_box">
       {chats ? (
         chats.map((msg, idx) => {
-          return <Message msg={msg} myname={myname} />;
+          return <Message msg={msg} myname={myname} key={idx} />;
         })
       ) : (
         <p>You don't have any chats yet!</p>

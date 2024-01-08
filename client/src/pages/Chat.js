@@ -57,7 +57,7 @@ function Chat() {
       </div>
       <div className="main_section">
         <div className="side_bar">{/* Component goes here */}</div>
-        <div className="message_container">
+        <div className="message_section">
           <MessageContainer chats={chats} sendMessage={sendMessage} />
         </div>
       </div>

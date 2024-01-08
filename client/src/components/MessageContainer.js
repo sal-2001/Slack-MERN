@@ -26,11 +26,11 @@ function MessageContainer({ chats, sendMessage }) {
 
   console.log("msg : ", newMsg);
   return (
-    <div className="messageContainer">
+    <div className="message_container">
       <div className="nameBar">
         <Namebar />
       </div>
-      <div className="message_box">
+      <div className="message_box_container">
         <MessageBox chats={chats} />
       </div>
       <div className="inputBox">
