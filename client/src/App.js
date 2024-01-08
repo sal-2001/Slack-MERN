@@ -11,9 +11,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          {/* <Route element={<PrivateRoute />}> */}
+          <Route element={<PrivateRoute />}>
             <Route path="/chat" element={<Chat />} />
-          {/* </Route> */}
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

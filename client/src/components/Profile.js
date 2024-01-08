@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/profile.css";
 import useStateValue from "../context/AppContext";
+import CloseIcon from '@mui/icons-material/Close';
 import {
   getDownloadURL,
   getStorage,
@@ -11,7 +12,7 @@ import { app } from "../firebase";
 import { addUser } from "../context/actions/register";
 import { userUpdate } from "../services/user";
 // import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
-function Profile() {
+function Profile({closeProfile}) {
   const fileRef = useRef(null);
   const [{ user }, dispatch] = useStateValue();
   const [edit, setEdit] = useState(false);
@@ -43,15 +44,18 @@ function Profile() {
       //for getting the URL of the uploaded profile image
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          
-          userUpdate({photo: downloadURL}).then((data)=>{
-            addUser(dispatch, { ...user, photo: downloadURL });
-            setFormData({ ...formData, photo: downloadURL });
-          })
+          userUpdate({ ...formData, photo: downloadURL }, user.userId)
+            .then((data) => {
+              setFilePerc(0);
+              addUser(dispatch, {...data, photo: data.avatar});
+              setFormData({ ...formData, photo: data.avatar });
+            })
+            .catch((error) => console.log(error));
         });
       }
     );
   };
+  
   const updateUser = async () => {
     try {
       userUpdate(formData, user.userId)
@@ -77,6 +81,9 @@ function Profile() {
   };
   return (
     <div className="profileContainer">
+      <div className="closeIconContainer" onClick={closeProfile}>
+        <CloseIcon className="closeIcon"/>
+      </div>
       <h1 className="profileTitle">Profile</h1>
       <div className="imageContainer">
         <input
