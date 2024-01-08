@@ -43,7 +43,7 @@ const accessChat = async (req, res, next) => {
 
 const fetchAllChats = async (req, res, next) => {
   console.log("reached controller fetchAllChats");
-  const userId = req.query.userId;
+  const userId = req.params.id;
   if (!userId) {
     console.log("userId property not present");
     return next(errorHandler(400, "userId property not present"));

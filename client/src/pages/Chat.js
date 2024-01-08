@@ -13,7 +13,7 @@ function Chat() {
   const [name, setName] = useState("");
   const [chats, setChats] = useState([]);
   const [socket, setSocket] = useState(null);
-
+  console.log('cookie value',document.cookie);
   useEffect(() => {
     let socketInstance = io(BASE_URL);
     setSocket(socketInstance);

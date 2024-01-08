@@ -6,10 +6,10 @@ const socketio = require("socket.io");
 const path = require("path");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
-const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
-const chatRoutes = require("./routes/chat");
-const messageRoutes = require("./routes/message");
+const authRouter = require("./routes/auth.js");
+const userRouter = require("./routes/user.js");
+const chatRoutes = require("./routes/chat.js");
+const messageRoutes = require("./routes/message.js");
 
 dotenv.config();
 
