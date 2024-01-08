@@ -7,6 +7,11 @@ const ChatSchema = Mongoose.Schema(
       required: true,
       trim: true,
     },
+    profile: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dptno80n9/image/upload/v1704610214/slackmern/ProfileIcon_dmcba9.jpg",
+    },
     isGroupChat: {
       type: Boolean,
       default: false,

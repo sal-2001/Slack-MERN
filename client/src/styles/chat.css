@@ -30,7 +30,7 @@
   background-color: grey;
 }
 
-.message_container {
+.message_section {
   flex: 0.75;
   height: auto;
   overflow-y: auto;

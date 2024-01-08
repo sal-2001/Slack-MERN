@@ -5,17 +5,21 @@ const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const path = require("path");
 const logger = require("morgan");
+const { instrument } = require("@socket.io/admin-ui");
+
 const cookieParser = require("cookie-parser");
-const authRouter = require("./routes/auth.js");
-const userRouter = require("./routes/user.js");
-const chatRoutes = require("./routes/chat.js");
-const messageRoutes = require("./routes/message.js");
+const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
+const chatRoutes = require("./routes/chat");
+const messageRoutes = require("./routes/message");
+const socketIOController = require("./controllers/socket");
 
 dotenv.config();
 
 const STATIC_FOLDER = "/";
 const PORT = process.env.PORT || 8000;
 const CLIENT_URL = process.env.CLIENT_URL;
+const ADMIN_SOCKETIO_UI = "https://admin.socket.io";
 
 const app = express();
 
@@ -56,13 +60,18 @@ const server = app.listen(PORT, () => {
 const io = socketio(server, {
   pingTimeout: 600000,
   cors: {
-    origin: [CLIENT_URL],
+    origin: [CLIENT_URL, ADMIN_SOCKETIO_UI],
     allowedHeaders: ["*"],
     credentials: true,
   },
 });
 
+instrument(io, {
+  auth: false,
+  mode: "development",
+});
+
 io.on("connection", (socket) => {
   console.log("someone connected");
-  // socketController(socket);
+  socketIOController(socket);
 });

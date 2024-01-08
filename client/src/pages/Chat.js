@@ -5,52 +5,37 @@ import TopBar from "../components/TopBar";
 import MessageContainer from "../components/MessageContainer";
 import io from "socket.io-client";
 import ChatSection from "../components/ChatSection";
+import useStateValue from "../context/AppContext";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Chat() {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [chats, setChats] = useState([]);
+  // const navigate = useNavigate();
+  const [{ user, isLoggedIn }, dispatch] = useStateValue();
+  const [currChatId, setCurrChatId] = useState("");
   const [socket, setSocket] = useState(null);
-  console.log('cookie value',document.cookie);
+  const [socketConnected, setSocketConnected] = useState(false);
+
+  useEffect(() => {
+    setCurrChatId("659a3f3d01f1872718f4285b");
+  }, []);
+
   useEffect(() => {
     let socketInstance = io(BASE_URL);
     setSocket(socketInstance);
   }, []);
 
   useEffect(() => {
-    // const username = localStorage.getItem("username");
-    // if (!username) navigate("/");
-    // setName(username);
-  }, []);
+    if (!socket || !isLoggedIn) return;
+    console.log("going to emit setup");
 
-  useEffect(() => {
-    if (!socket) return;
-    socket.on("connect", () => {
-      console.log("connected to backend");
-      if (!name) return;
-      socket.emit("joined-user", name);
+    socket.emit("SETUP", user);
+
+    socket.on("connection", () => {
+      console.log("connection established");
+      setSocketConnected(true);
     });
-
-    socket.on("message", (message) => {
-      console.log("recieved a message");
-      // const messageContainer = document.querySelector(".message__container");
-      // messageContainer.innerHTML += `<div>${message}</div>`;
-      let newChat = chats;
-      chats.push(message);
-      setChats(newChat);
-    });
-  }, [name]);
-
-  const sendMessage = (message) => {
-    socket.emit("message", { message: message });
-    let msgs = chats;
-    msgs.push({ message, sender: "shijith" });
-    console.log("messages", msgs);
-    setChats(msgs);
-  };
-
+  }, [socket, isLoggedIn]);
   return (
     <div className="chat_page">
       <div className="top">
@@ -60,8 +45,8 @@ function Chat() {
         <div className="side_bar">
           <ChatSection />
         </div>
-        <div className="message_container">
-          <MessageContainer chats={chats} sendMessage={sendMessage} />
+        <div className="message_section">
+          <MessageContainer socket={socket} chatId={currChatId} />
         </div>
       </div>
     </div>
