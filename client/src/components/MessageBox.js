@@ -29,7 +29,7 @@ const Message = ({ message, currUserId }) => {
   return (
     <div
       className={`message ${
-        message.sender.userId === currUserId ? "my_message" : ""
+        message.sender._id === currUserId ? "my_message" : ""
       }`}
     >
       <p className="sender_name">{message.sender.name}</p>

@@ -17,8 +17,7 @@ function Chat() {
   const [socketConnected, setSocketConnected] = useState(false);
 
   useEffect(() => {
-    let msg = prompt("RoomId Please!");
-    setCurrChatId(msg);
+    setCurrChatId("659a3f3d01f1872718f4285b");
   }, []);
 
   useEffect(() => {

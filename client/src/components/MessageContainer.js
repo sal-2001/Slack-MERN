@@ -5,6 +5,7 @@ import MessageBox from "./MessageBox";
 import useStateValue from "../context/AppContext";
 
 import InputBox from "./InputBox";
+import { getAllMessages, sendMessage } from "../services/messages";
 
 function MessageContainer({ socket, chatId }) {
   const [{ user, isLoggedIn }, dispatch] = useStateValue();
@@ -14,6 +15,7 @@ function MessageContainer({ socket, chatId }) {
     if (!socket || !chatId) return;
     // Socketio event for joining a room
     socket.emit("JOIN_ROOM", chatId);
+    populateChatHistory(chatId);
   }, [chatId]);
 
   useEffect(() => {
@@ -26,15 +28,21 @@ function MessageContainer({ socket, chatId }) {
     });
   }, [socket, isLoggedIn]);
 
+  const populateChatHistory = async (chatId) => {
+    let messages = await getAllMessages(chatId);
+    setChats(messages);
+  };
+
   // Sending a new message
-  const sendMessage = (message) => {
+  const sendMessageHandler = async (message) => {
     let newMessage = {
       content: message,
-      sender: user,
-      chatId: chatId,
+      sender: user?.userId,
+      chat: chatId,
     };
     socket.emit("NEW_MESSAGE_SENT", newMessage);
-    addMessageToChat(newMessage);
+    let msg = await sendMessage(newMessage);
+    addMessageToChat(msg);
   };
 
   // Function for pushing message to the chat list
@@ -52,7 +60,7 @@ function MessageContainer({ socket, chatId }) {
       <div className="message_box_container">
         <MessageBox chats={chats} />
       </div>
-      <InputBox sendMessage={sendMessage} />
+      <InputBox sendMessage={sendMessageHandler} />
     </div>
   );
 }

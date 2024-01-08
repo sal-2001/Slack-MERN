@@ -2,16 +2,16 @@ const Message = require("../models/Message");
 const errorHandler = require("../utils/error");
 
 const sendMessage = async (req, res, next) => {
-  const { userId, content, chatId } = req.body;
+  const { sender, content, chat } = req.body;
 
-  if (!userId || !content || !chatId) {
+  if (!sender || !content || !chat) {
     return next(errorHandler(400, "Invalid request"));
   }
 
   let message = {
-    sender: userId,
+    sender: sender,
     content: content,
-    chat: chatId,
+    chat: chat,
   };
 
   try {
