@@ -5,14 +5,16 @@ import TopBar from "../components/TopBar";
 import MessageContainer from "../components/MessageContainer";
 import io from "socket.io-client";
 import ChatSection from "../components/ChatSection";
+import useStateValue from "../context/AppContext";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Chat() {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
+  // const navigate = useNavigate();
+  const [{ user, isLoggedIn }, dispatch] = useStateValue();
   const [chats, setChats] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   useEffect(() => {
     let socketInstance = io(BASE_URL);
@@ -20,35 +22,36 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    // const username = localStorage.getItem("username");
-    // if (!username) navigate("/");
-    // setName(username);
-  }, []);
+    if (!socket || !isLoggedIn) return;
+    console.log("going to emit setup");
 
-  useEffect(() => {
-    if (!socket) return;
-    socket.on("connect", () => {
-      console.log("connected to backend");
-      if (!name) return;
-      socket.emit("joined-user", name);
+    socket.emit("SETUP", user);
+
+    socket.on("connection", () => {
+      console.log("connection established");
+      setSocketConnected(true);
     });
 
-    socket.on("message", (message) => {
-      console.log("recieved a message");
-      // const messageContainer = document.querySelector(".message__container");
-      // messageContainer.innerHTML += `<div>${message}</div>`;
-      let newChat = chats;
-      chats.push(message);
-      setChats(newChat);
+    socket.on("NEW_MESSAGE_RECIEVED", (message) => {
+      console.log("new message recieved : ", message);
+      addMessageToChat(message);
     });
-  }, [name]);
+  }, [socket, isLoggedIn]);
 
   const sendMessage = (message) => {
-    socket.emit("message", { message: message });
-    let msgs = chats;
-    msgs.push({ message, sender: "shijith" });
-    console.log("messages", msgs);
-    setChats(msgs);
+    let newMessage = {
+      content: message,
+      sender: user,
+    };
+    socket.emit("NEW_MESSAGE_SENT", newMessage);
+    addMessageToChat(newMessage);
+  };
+
+  // FUnction for pushing message to the chat list
+  const addMessageToChat = (message) => {
+    setChats((chats) => {
+      return [...chats, message];
+    });
   };
 
   return (

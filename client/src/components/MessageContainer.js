@@ -14,7 +14,6 @@ function MessageContainer({ chats, sendMessage }) {
 
   const enterSend = (e) => {
     if (e.key === "Enter") {
-      console.log(e.key);
       e.preventDefault();
       send();
     }
@@ -24,7 +23,6 @@ function MessageContainer({ chats, sendMessage }) {
     setNewMsg(e.target.value);
   };
 
-  console.log("msg : ", newMsg);
   return (
     <div className="message_container">
       <div className="nameBar">

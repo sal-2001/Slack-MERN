@@ -72,4 +72,15 @@ instrument(io, {
 
 io.on("connection", (socket) => {
   console.log("someone connected");
+
+  socket.on("SETUP", (userData) => {
+    console.log("setting up : ", userData?.userId);
+    socket.join(userData?.userId);
+  });
+
+  socket.on("NEW_MESSAGE_SENT", (message) => {
+    console.log("NEW MESSAGE : ", message?.content);
+    // socket.join(userData?.userId);
+    socket.broadcast.emit("NEW_MESSAGE_RECIEVED", message);
+  });
 });
