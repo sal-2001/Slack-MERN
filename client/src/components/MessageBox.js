@@ -26,7 +26,6 @@ function MessageBox({ chats }) {
 export default MessageBox;
 
 const Message = ({ message, currUserId }) => {
-  console.log(message);
   return (
     <div
       className={`message ${

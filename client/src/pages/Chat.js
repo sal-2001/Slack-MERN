@@ -12,9 +12,14 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 function Chat() {
   // const navigate = useNavigate();
   const [{ user, isLoggedIn }, dispatch] = useStateValue();
-  const [chats, setChats] = useState([]);
+  const [currChatId, setCurrChatId] = useState("");
   const [socket, setSocket] = useState(null);
   const [socketConnected, setSocketConnected] = useState(false);
+
+  useEffect(() => {
+    let msg = prompt("RoomId Please!");
+    setCurrChatId(msg);
+  }, []);
 
   useEffect(() => {
     let socketInstance = io(BASE_URL);
@@ -31,29 +36,7 @@ function Chat() {
       console.log("connection established");
       setSocketConnected(true);
     });
-
-    socket.on("NEW_MESSAGE_RECIEVED", (message) => {
-      console.log("new message recieved : ", message);
-      addMessageToChat(message);
-    });
   }, [socket, isLoggedIn]);
-
-  const sendMessage = (message) => {
-    let newMessage = {
-      content: message,
-      sender: user,
-    };
-    socket.emit("NEW_MESSAGE_SENT", newMessage);
-    addMessageToChat(newMessage);
-  };
-
-  // FUnction for pushing message to the chat list
-  const addMessageToChat = (message) => {
-    setChats((chats) => {
-      return [...chats, message];
-    });
-  };
-
   return (
     <div className="chat_page">
       <div className="top">
@@ -64,7 +47,7 @@ function Chat() {
           <ChatSection />
         </div>
         <div className="message_section">
-          <MessageContainer chats={chats} sendMessage={sendMessage} />
+          <MessageContainer socket={socket} chatId={currChatId} />
         </div>
       </div>
     </div>
