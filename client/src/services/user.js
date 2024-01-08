@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export const signUpUser = async (data) => {
   try {
     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/signup`, data);
@@ -39,6 +38,17 @@ export const googleSignIn = async (data) => {
   }
 };
 
-export const userUpdate = async(data)=>{
-  
+export const userUpdate = async(data,id) =>{
+  try{
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/user/update/${id}`,data);
+    if(res.status===false)
+    {
+      console.log(res.message);
+      return;
+    }
+    return res.data;
+  }catch(error)
+  {
+    console.log(error);
+  }
 }

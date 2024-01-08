@@ -7,8 +7,9 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import {app} from "../firebase";
+import { app } from "../firebase";
 import { addUser } from "../context/actions/register";
+import { userUpdate } from "../services/user";
 // import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 function Profile() {
   const fileRef = useRef(null);
@@ -19,7 +20,7 @@ function Profile() {
   const [formData, setFormData] = useState({});
   useEffect(() => {
     if (file) {
-        // console.log(file);
+      // console.log(file);
       handleFileUpload(file);
     }
   }, [file]);
@@ -42,41 +43,37 @@ function Profile() {
       //for getting the URL of the uploaded profile image
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addUser(dispatch,{ ...user, photo: downloadURL });
-          setFormData({...formData,photo: downloadURL})
+          
+          userUpdate({photo: downloadURL}).then((data)=>{
+            addUser(dispatch, { ...user, photo: downloadURL });
+            setFormData({ ...formData, photo: downloadURL });
+          })
         });
       }
     );
   };
-  const updateUser = async()=>{
+  const updateUser = async () => {
     try {
-        const res = await fetch(`/api/user/update/${currentUser._id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-        if (data.success === false) {
-          dispatch(updateUserFail(data.message));
-          return;
-        }
-        dispatch(updateUserSuccess(data));
-        setUpdateSuccess(true);
-      } catch (error) {
-        dispatch(updateUserFail(error.message));
-      }
-  }
+      userUpdate(formData, user.userId)
+        .then((data) => {
+          addUser(dispatch, data);
+          setEdit(false);
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleClick = async (e) => {
     e.preventDefault();
     if (edit) {
+      updateUser();
     } else {
       setEdit(true);
     }
   };
   const handleChange = (e) => {
-    setFormData({...formData,[e.target.id] : e.target.value})
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   return (
     <div className="profileContainer">

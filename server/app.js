@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const path = require("path");
 const logger = require("morgan");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth");
-// const userRouter = require("./routes/user.js");
+const userRouter = require("./routes/user");
 const chatRoutes = require("./routes/chat");
 const messageRoutes = require("./routes/message");
 
@@ -27,6 +27,7 @@ app.use(logger("dev"));
 
 // app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use((err, req, res, next) => {
