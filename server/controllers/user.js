@@ -29,4 +29,17 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { updateUser };
+const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "User not found!"));
+    }
+    const { password: pass, ...rest } = user._doc;
+    //pass user details except the password
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+module.exports = { updateUser, getUser };

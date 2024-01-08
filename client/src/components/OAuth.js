@@ -23,9 +23,9 @@ export default function OAuth() {
       };
       googleSignIn(userData)
         .then((data) => {
-          addUser(dispatch, {...data,userId: data._id});
-          navigate("/chat");
+          addUser(dispatch, { ...data, userId: data._id });
         })
+        .then(() => navigate("/chat"))
         .catch((error) => console.log(error));
     } catch (error) {
       console.log("Could not signin with google!", error);
