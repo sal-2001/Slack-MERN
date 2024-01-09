@@ -11,10 +11,20 @@ export default function Participant({ chat }) {
       minute: "2-digit",
     });
   };
-
-  const getProfilePic = (chat) => {
+  const getProfileName = (chat) => {
     let otherUserProfile = null;
 
+    if (!chat?.isGroupChat) {
+      let otherUser = chat?.users?.find(
+        (user) => user?._id !== currUser?.userId
+      );
+      otherUserProfile = otherUser?.name;
+    }
+    return otherUserProfile || chat?.chatName;
+  };
+  const getProfilePic = (chat) => {
+    let otherUserProfile = null;
+    
     if (!chat?.isGroupChat) {
       let otherUser = chat?.users?.find(
         (user) => user?._id !== currUser?.userId
@@ -26,7 +36,7 @@ export default function Participant({ chat }) {
   return (
     <div className="participantContainer">
       <img src={getProfilePic(chat)} alt="profile" className="participantImg" />
-      <p className="participantName">{chat?.chatName}</p>
+      <p className="participantName">{getProfileName(chat)}</p>
       <p className="messageTime">{getShortTime(chat?.updatedAt)}</p>
     </div>
   );

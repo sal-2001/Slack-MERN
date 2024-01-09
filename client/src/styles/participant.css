@@ -2,26 +2,28 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   width: 100%;
   background-color: white;
   padding: 5px 15px;
   border-bottom: black 1px solid;
   height: 65px;
+  cursor: pointer;
 }
 
 .participantImg {
-  height: 60px;
-  width: 60px;
+  height: 45px;
+  width: 45px;
   border-radius: 100px;
+  justify-content: start;
 }
 
 .participantName {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 15px;
 }
 
 .messageTime {
-  font-size: 13px;
+  font-size: 12px;
+  margin-left: auto;
 }/*# sourceMappingURL=participant.css.map */
