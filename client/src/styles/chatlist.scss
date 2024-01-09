@@ -1,8 +1,9 @@
+@import "./variables";
+
 .chatSection {
-  height: calc(100vh - 50px);
+  height: calc(100vh - $topbar_height);
   overflow: auto;
 }
-
 .chatListHeader {
   display: flex;
   flex-direction: row;
@@ -17,12 +18,10 @@
   display: flex;
   flex-direction: column;
 }
-
 .headerIcon {
   color: #59e4a8;
   font-size: 25px;
 }
-
 .chatType {
   display: flex;
   flex-direction: row;
@@ -31,12 +30,10 @@
   align-items: center;
   height: 100%;
 }
-
 .active {
   border-bottom: #59e4a8 1px solid;
 }
-
 .chatType > p {
   font-size: 14px;
   font-weight: 700;
-}/*# sourceMappingURL=chatsection.css.map */
+}

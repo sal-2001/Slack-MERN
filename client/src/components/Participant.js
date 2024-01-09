@@ -1,12 +1,33 @@
-import React from 'react'
-import ProfileIcon from "../assets/ProfileIcon.jpg";
-import '../styles/participant.css';
-export default function Participant({chat}) {
+import React from "react";
+import "../styles/participant.css";
+import useStateValue from "../context/AppContext";
+
+export default function Participant({ chat }) {
+  const [{ user: currUser }, dispatch] = useStateValue();
+
+  const getShortTime = (time) => {
+    return new Date(time).toLocaleString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const getProfilePic = (chat) => {
+    let otherUserProfile = null;
+
+    if (!chat?.isGroupChat) {
+      let otherUser = chat?.users?.find(
+        (user) => user?._id !== currUser?.userId
+      );
+      otherUserProfile = otherUser?.avatar;
+    }
+    return otherUserProfile || chat?.profile;
+  };
   return (
-    <div className='participantContainer'>
-        <img src={ProfileIcon} alt='profile' className='participantImg'/>
-        <p className='participantName'>chatName</p>
-        <p className='messageTime'>Time</p>
+    <div className="participantContainer">
+      <img src={getProfilePic(chat)} alt="profile" className="participantImg" />
+      <p className="participantName">{chat?.chatName}</p>
+      <p className="messageTime">{getShortTime(chat?.updatedAt)}</p>
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import "../styles/chat.css";
 import TopBar from "../components/TopBar";
 import MessageContainer from "../components/MessageContainer";
 import io from "socket.io-client";
-import ChatSection from "../components/ChatSection";
+import ChatList from "../components/ChatList";
 import useStateValue from "../context/AppContext";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -43,7 +43,7 @@ function Chat() {
       </div>
       <div className="main_section">
         <div className="side_bar">
-          <ChatSection />
+          <ChatList />
         </div>
         <div className="message_section">
           <MessageContainer socket={socket} chatId={currChatId} />
