@@ -11,7 +11,7 @@ const socketIOController = (socket) => {
 
   socket.on("NEW_MESSAGE_SENT", (message) => {
     console.log("NEW MESSAGE : ", message);
-    socket.to(message?.chatId).emit("NEW_MESSAGE_RECIEVED", message);
+    socket.to(message?.chat?._id).emit("NEW_MESSAGE_RECIEVED", message);
   });
 };
 

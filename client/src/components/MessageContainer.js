@@ -40,8 +40,8 @@ function MessageContainer({ socket, chatId }) {
       sender: user?.userId,
       chat: chatId,
     };
-    socket.emit("NEW_MESSAGE_SENT", newMessage);
     let msg = await sendMessage(newMessage);
+    socket.emit("NEW_MESSAGE_SENT", msg);
     addMessageToChat(msg);
   };
 
