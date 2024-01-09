@@ -3,11 +3,11 @@ export const addUser = (dispatch, data) => {
   dispatch({
     type: "ADD_USER",
     user: {
-      userId: data._id,
-      name: data.name,
-      email: data.email,
+      _id: data?._id,
+      name: data?.name,
+      email: data?.email,
       phone: data?.phone,
-      photo: data.avatar,
+      avatar: data?.avatar,
     },
   });
 };

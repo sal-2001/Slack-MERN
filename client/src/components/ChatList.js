@@ -11,11 +11,11 @@ export default function ChatList({ selectChat }) {
   const [userchats, setUserChats] = useState([]);
 
   useEffect(() => {
-    if (user?.userId) handleGetChats();
-  }, [user?.userId]);
+    if (user?._id) handleGetChats();
+  }, [user?._id]);
 
   const handleGetChats = async () => {
-    getUserChats(user.userId).then((data) => {
+    getUserChats(user?._id).then((data) => {
       console.log("data", data);
       setUserChats(data);
     });

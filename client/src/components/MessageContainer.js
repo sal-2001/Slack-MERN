@@ -38,7 +38,7 @@ function MessageContainer({ socket, chat }) {
   const sendMessageHandler = async (message) => {
     let newMessage = {
       content: message,
-      sender: user?.userId,
+      sender: user?._id,
       chat: chat?._id,
     };
     let msg = await sendMessage(newMessage);

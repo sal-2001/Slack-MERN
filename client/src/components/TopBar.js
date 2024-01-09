@@ -14,7 +14,7 @@ function TopBar() {
     <header className="topBar">
       <h2>My Chat</h2>
       <div className="userContainer" onClick={() => setOpenProfile(true)}>
-        <img src={user.photo} className="userImage" />
+        <img src={user?.avatar} className="userImage" />
       </div>
       {openProfile && <Profile closeProfile={closeProfile} />}
     </header>

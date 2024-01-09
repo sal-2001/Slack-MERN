@@ -2,18 +2,14 @@ const User = require("../models/User.js");
 const errorHandler = require("../utils/error.js");
 const bcryptjs = require("bcryptjs");
 const updateUser = async (req, res, next) => {
-  // if (req.user.id !== req.params.id)
-  //   return next(errorHandler(401, "You can only update your account"));
-
-  // console.log("Request : ", req.cookies);
-  // return;
+  let userId = req.userId;
 
   try {
     if (req.body.password) {
       req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+      userId,
       {
         $set: {
           name: req.body.name,
@@ -33,8 +29,9 @@ const updateUser = async (req, res, next) => {
 };
 
 const getUser = async (req, res, next) => {
+  let userId = req.userId;
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(userId);
     if (!user) {
       return next(errorHandler(404, "User not found!"));
     }

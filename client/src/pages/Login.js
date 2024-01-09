@@ -30,24 +30,20 @@ function Login() {
   };
   const submit = async (e) => {
     e.preventDefault();
-    if (isLogin) {
-      const userData = { email: data.email, password: data.password };
-      signInUser(userData)
-        .then((data) => {
-          addUser(dispatch, { ...data, userId: data._id });
-        })
-        .then(() => navigate("/chat"))
-        .catch((error) => console.log(error));
-    } else {
-      signUpUser(data)
-        .then((data) => {
-          console.log("data signup", data);
-          addUser(dispatch, { ...data, userId: data._id });
-        })
-        .then(() => navigate("/chat"))
-        .catch((error) => console.log(error));
-    }
+    const registerFunc = isLogin ? signInUser : signUpUser;
+    const registerData = isLogin
+      ? { email: data.email, password: data.password }
+      : data;
+
+    registerFunc(registerData)
+      ?.then((data) => {
+        localStorage.setItem("token", data.token);
+        addUser(dispatch, data);
+      })
+      .then(() => navigate("/chat"))
+      .catch((error) => console.log(error));
   };
+
   const changeMode = () => {
     setIsLogin((flag) => !flag);
     setData(freshData);

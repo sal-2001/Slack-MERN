@@ -10,3 +10,7 @@ export const isValid = (data, isLogin) => {
   });
   return flag;
 };
+
+export const getAuthToken = () => {
+  return localStorage.getItem("token");
+};

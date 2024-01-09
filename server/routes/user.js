@@ -4,10 +4,10 @@ const {
   getUser,
   getUserByEmail,
 } = require("../controllers/user.js");
-// const { verifyToken } = require("../utils/verifyUser.js");
+const checkAuth = require("../middlewares/check-auth.js");
 const router = express.Router();
 
-router.post("/update/:id", updateUser);
-router.get("/get/:id", getUser);
-router.get("/getdetails", getUserByEmail);
+router.post("/update/", checkAuth, updateUser);
+router.get("/", checkAuth, getUser);
+router.get("/getdetails", checkAuth, getUserByEmail);
 module.exports = router;

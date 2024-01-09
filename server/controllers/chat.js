@@ -2,7 +2,8 @@ const Chat = require("../models/Chat");
 
 const accessChat = async (req, res, next) => {
   console.log("reached controller");
-  const { senderId, recieverId } = req.body;
+  let senderId = req.userId;
+  const { recieverId } = req.body;
   if (!recieverId || !senderId) {
     console.log("userId property not present");
     return next(errorHandler(400, "userId property not present"));
@@ -43,8 +44,7 @@ const accessChat = async (req, res, next) => {
 
 const fetchAllChats = async (req, res, next) => {
   console.log("reached controller fetchAllChats");
-  const userId = req.params.id;
-  console.log('userId', userId);
+  const userId = req.userId;
   if (!userId) {
     console.log("userId property not present");
     return next(errorHandler(400, "userId property not present"));
@@ -68,7 +68,8 @@ const fetchAllChats = async (req, res, next) => {
 
 const createGroupChat = async (req, res, next) => {
   console.log("reached controller for createGroupChat");
-  const { users, user, groupName } = req.body;
+  let userId = req.userId;
+  const { users, groupName } = req.body;
   if (!users?.length || !groupName) {
     console.log("All fields are not filled");
     return next(errorHandler(400, "Please fill all the fields"));
@@ -79,14 +80,14 @@ const createGroupChat = async (req, res, next) => {
     return next(errorHandler(400, "A group require more than 2 members"));
   }
 
-  users.push(user);
+  users.push(userId);
 
   try {
     let groupChat = await Chat.create({
       chatName: groupName,
       isGroupChat: true,
       users: users,
-      groupAdmin: user,
+      groupAdmin: userId,
     });
 
     const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
@@ -131,7 +132,8 @@ const renameGroup = async (req, res, next) => {
 };
 
 const addToGroup = async (req, res, next) => {
-  const { chatId, userId } = req.body;
+  let userId = req.userId;
+  const { chatId } = req.body;
   if (!chatId || !userId) {
     console.log("Chat Id or chat name not present");
     return next(errorHandler(400, "ChatId or new chatname is missing"));
@@ -163,7 +165,8 @@ const addToGroup = async (req, res, next) => {
 
 const removeFromGroup = async (req, res, next) => {
   console.log("reached controller for removeFromGroup");
-  const { chatId, userId } = req.body;
+  let userId = req.userId;
+  const { chatId } = req.body;
   console.log("removing ", userId);
   if (!chatId || !userId) {
     console.log("Chat Id or chat name not present");

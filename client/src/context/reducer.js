@@ -1,12 +1,6 @@
 import ProfileIcon from "../assets/ProfileIcon.jpg";
 export const initialState = {
-  user: {
-    userId: "",
-    name: "",
-    email: "",
-    phone: "",
-    photo: ProfileIcon,
-  },
+  user: null,
   isLoggedIn: false,
 };
 
@@ -16,23 +10,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: {
-          userId: action.user.userId,
+          _id: action.user._id,
           name: action.user.name,
           email: action.user.email,
           phone: action.user.phone,
-          photo: action.user.photo,
+          avatar: action.user.avatar,
         },
         isLoggedIn: true,
       };
     case "REMOVE_USER":
       return {
         ...state,
-        user: {
-          name: "",
-          email: "",
-          phone: "",
-          photo: ProfileIcon,
-        },
+        user: null,
         isLoggedIn: false,
       };
     default:

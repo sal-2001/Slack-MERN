@@ -14,7 +14,7 @@ function MessageBox({ messages }) {
     <div className="message_box" ref={messageBox}>
       {messages ? (
         messages.map((msg, idx) => {
-          return <Message message={msg} currUserId={user?.userId} key={idx} />;
+          return <Message message={msg} currUserId={user?._id} key={idx} />;
         })
       ) : (
         <p>You don't have any messages yet!</p>

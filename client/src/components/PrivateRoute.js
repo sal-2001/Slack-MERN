@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useStateValue from "../context/AppContext";
-import Login from "../pages/Login";
-import Chat from "../pages/Chat";
-import { Outlet,Navigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { getAuthToken } from "../utils/register";
+import { getUser } from "../services/user";
+import { addUser } from "../context/actions/register";
+
 export default function PrivateRoute() {
-  const [{ isLoggedIn}, _] = useStateValue();
-  return !isLoggedIn ? <Navigate to='/' /> : <Outlet />;
+  const navigate = useNavigate();
+  const [_, dispatch] = useStateValue();
+  useEffect(() => {
+    let token = getAuthToken();
+    if (token) {
+      getUser(token).then((data) => {
+        console.log("data of user : ", data);
+        addUser(dispatch, data);
+      });
+    } else {
+      navigate("/");
+    }
+  }, []);
+  return <Outlet />;
 }
