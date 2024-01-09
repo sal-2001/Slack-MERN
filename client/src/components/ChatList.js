@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Participant from "./Participant";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
 import "../styles/chatlist.css";
+import CloseIcon from "@mui/icons-material/Close";
+import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import useStateValue from "../context/AppContext";
 import { getUserChats } from "../services/chat";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function ChatList({ selectChat }) {
+  const fileRef = useRef(null);
   const [{ user }, dispatch] = useStateValue();
   const [userchats, setUserChats] = useState([]);
+  const [addUser, setAddUser] = useState(false);
+  const [isChat, setIsChat] = useState(false);
 
   useEffect(() => {
     if (user?._id) handleGetChats();
@@ -23,11 +29,17 @@ export default function ChatList({ selectChat }) {
   return (
     <div className="chatSection">
       <div className="chatListHeader">
-        <div className="chatType active">
+        <div
+          className={`chatType ${isChat ? "active" : ""}`}
+          onClick={() => setIsChat(true)}
+        >
           <PersonIcon className="headerIcon" />
-          <p>Chats</p>
+          <p>Direct</p>
         </div>
-        <div className="chatType">
+        <div
+          className={`chatType ${!isChat ? "active" : ""}`}
+          onClick={() => setIsChat(false)}
+        >
           <GroupsIcon className="headerIcon" />
           <p>Groups</p>
         </div>
@@ -39,6 +51,75 @@ export default function ChatList({ selectChat }) {
             <Participant key={chat._id} chat={chat} selectChat={selectChat} />
           ))}
       </div>
+      <div className="addIconContainer" onClick={() => setAddUser(true)}>
+        <AddIcon className="addIcon" />
+      </div>
+      {addUser &&
+        (isChat ? (
+          <form className="addUserContainer">
+            <div
+              className="closeIconContainer"
+              onClick={() => setAddUser(false)}
+            >
+              <CloseIcon className="closeIcon" />
+            </div>
+            <label for="email" className="addUserLabel">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="addUserInput"
+              placeholder="Enter user email..."
+            />
+            <button className="addUserButton">Add User</button>
+          </form>
+        ) : (
+          <form className="addUserContainer">
+            <div
+              className="closeIconContainer"
+              onClick={() => setAddUser(false)}
+            >
+              <CloseIcon className="closeIcon" />
+            </div>
+            <input
+              type="file"
+              // onChange={(e) => setFile(e.target.files[0])}
+              ref={fileRef}
+              hidden
+              accept="image/*"
+            />
+            <img
+              src="https://res.cloudinary.com/dptno80n9/image/upload/v1704779893/slackmern/2352167_t2jyva.png"
+              onClick={() => fileRef.current.click()}
+              alt="profile pic"
+              title="Edit group profile image"
+              className="groupProfile"
+            />
+            <label for="groupname" className="addUserLabel">
+              Group Name
+            </label>
+            <input
+              type="text"
+              id="groupname"
+              className="addUserInput"
+              placeholder="Enter group name..."
+            />
+            <label for="email" className="addUserLabel">
+              Email
+            </label>
+            <div className="groupEmailInput">
+              <input
+                type="email"
+                id="email"
+                className="addUserInput"
+                placeholder="Enter user email..."
+              />
+              <AddCircleOutlinedIcon className="emailAddIcon" />
+            </div>
+            <button className="addUserButton">Create Group</button>
+          </form>
+        ))}
     </div>
   );
 }

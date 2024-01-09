@@ -1,5 +1,8 @@
 const Chat = require("../models/Chat");
 
+let groupChatIcon =
+  "https://res.cloudinary.com/dptno80n9/image/upload/v1704779893/slackmern/2352167_t2jyva.png";
+
 const accessChat = async (req, res, next) => {
   console.log("reached controller");
   let senderId = req.userId;
@@ -88,6 +91,7 @@ const createGroupChat = async (req, res, next) => {
       isGroupChat: true,
       users: users,
       groupAdmin: userId,
+      profile: groupChatIcon,
     });
 
     const fullGroupChat = await Chat.findOne({ _id: groupChat._id })

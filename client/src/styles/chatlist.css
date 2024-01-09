@@ -1,16 +1,17 @@
 .chatSection {
+  min-width: 250px;
+  flex: 0.25;
   height: calc(100vh - 50px);
   overflow: auto;
+  position: relative;
 }
 
 .chatListHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: stretch;
   background-color: white;
-  padding: 10px;
-  border-bottom: 2px solid #59e4a8;
 }
 
 .chatList {
@@ -26,17 +27,108 @@
 .chatType {
   display: flex;
   flex-direction: row;
-  text-align: center;
+  justify-content: center;
   gap: 10px;
   align-items: center;
   height: 100%;
+  cursor: pointer;
+  width: 50%;
+  padding: 10px;
 }
 
 .active {
-  border-bottom: #59e4a8 1px solid;
+  border-bottom: #59e4a8 2px solid;
 }
 
 .chatType > p {
   font-size: 14px;
   font-weight: 700;
+}
+
+.addIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+  background-color: #59e4a8;
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.addIcon {
+  color: white;
+  font-size: 30px;
+}
+
+.addUserContainer {
+  position: fixed;
+  width: 300px;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px 10px rgb(131, 131, 131);
+}
+
+.addUserInput {
+  border: none;
+  border-radius: 5px;
+  padding: 7px;
+  width: 100%;
+}
+
+.addUserLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.addUserButton {
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  background-color: #59e4a8;
+  color: white;
+  cursor: pointer;
+}
+
+.groupProfile {
+  width: 65px;
+  height: 65px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.groupEmailInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.emailAddIcon {
+  font-size: 22px;
+  color: #59e4a8;
+  margin-left: auto;
+}
+
+.closeIconContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  cursor: pointer;
+}
+
+.closeIcon {
+  color: red;
+  font-size: 22px;
 }/*# sourceMappingURL=chatlist.css.map */
