@@ -1,4 +1,4 @@
-Using the MERN (MongoDB, Express.js, React.js, Node.js) the application was developed. The following libraries were also used,
+Using the MERN stack (MongoDB, Express.js, React.js, Node.js) the application was developed. The following libraries were also used,
 Libraries Used:
 1.	Mongoose
 2.	Socket.io
