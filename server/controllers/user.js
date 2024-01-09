@@ -1,9 +1,12 @@
-const User = require("../models/User");
-const errorHandler = require("../utils/error");
+const User = require("../models/User.js");
+const errorHandler = require("../utils/error.js");
 const bcryptjs = require("bcryptjs");
 const updateUser = async (req, res, next) => {
   // if (req.user.id !== req.params.id)
   //   return next(errorHandler(401, "You can only update your account"));
+
+  // console.log("Request : ", req.cookies);
+  // return;
 
   try {
     if (req.body.password) {

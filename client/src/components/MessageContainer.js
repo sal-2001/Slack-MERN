@@ -29,6 +29,7 @@ function MessageContainer({ socket, chatId }) {
   }, [socket, isLoggedIn]);
 
   const populateChatHistory = async (chatId) => {
+    console.log("poulating chat history of ", chatId);
     let messages = await getAllMessages(chatId);
     setChats(messages);
   };

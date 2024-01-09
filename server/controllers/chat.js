@@ -43,7 +43,8 @@ const accessChat = async (req, res, next) => {
 
 const fetchAllChats = async (req, res, next) => {
   console.log("reached controller fetchAllChats");
-  const userId = req.query.userId;
+  const userId = req.params.id;
+  console.log('userId', userId);
   if (!userId) {
     console.log("userId property not present");
     return next(errorHandler(400, "userId property not present"));
@@ -58,7 +59,7 @@ const fetchAllChats = async (req, res, next) => {
       .populate("latestMessage")
       .sort({ updatedAt: -1 });
 
-    return res.status(200).json(chatList);
+    res.status(200).json(chatList);
   } catch (err) {
     console.log("something went wrong : ", err.message);
     next(err);

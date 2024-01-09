@@ -1,31 +1,55 @@
-import React from 'react'
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
+import React, { useEffect, useState } from "react";
+import Participant from "./Participant";
+import PersonIcon from "@mui/icons-material/Person";
+import GroupsIcon from "@mui/icons-material/Groups";
+import "../styles/chatsection.css";
+import useStateValue from "../context/AppContext";
+import { getUserChats } from "../services/chat";
 export default function ChatSection() {
+  const [{ user }, dispatch] = useStateValue();
+  const [userchats, setUserChats] = useState([]);
+  // useEffect(()=>{
+  //   if(userchats.length===0)
+  //   {
+  //     handleGetChats();
+  //   }
+  // },[]);
+  const handleGetChats = async () => {
+    getUserChats(user.userId).then((data) => {
+      console.log("data", data);
+      setUserChats(data);
+    });
+  };
   return (
-    <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Button color="inherit">Chats</Button>
-          </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Button color="inherit">Groups</Button>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-  )
+    <div className="chatSection">
+      <div className="chatListHeader">
+        <div className="chatType active">
+          <PersonIcon className="headerIcon" />
+          <p>Chats</p>
+        </div>
+        <div className="chatType">
+          <GroupsIcon className="headerIcon" />
+          <p>Groups</p>
+        </div>
+      </div>
+      <div className="chatList">
+        {/* {
+          userchats && userchats.length > 0 && userchats.map((chat)=>(
+            <Participant key={chat._id} chat={chat}/>
+          )
+          )
+        } */}
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+        <Participant />
+      </div>
+    </div>
+  );
 }
