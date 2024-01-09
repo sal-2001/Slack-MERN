@@ -45,4 +45,21 @@ const getUser = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = { updateUser, getUser };
+
+const getUserByEmail = async (req, res, next) => {
+  let email = req.query.email;
+  try {
+    const user = await User.findOne({ email: email }, { password: 0 });
+    console.log("user is : ", user);
+    if (!user) {
+      return next(errorHandler(404, "User not found!"));
+    }
+    // const { password: pass, ...rest } = user._doc;
+    //pass user details except the password
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { updateUser, getUser, getUserByEmail };
