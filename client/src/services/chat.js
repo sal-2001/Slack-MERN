@@ -8,6 +8,7 @@ export const getUserChats = async(id)=>{
             console.log(res.message);
             return;
         }
+        console.log('res',res);
         return res.data;
     }
     catch(error)

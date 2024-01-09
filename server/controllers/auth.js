@@ -31,10 +31,11 @@ const signin = async (req, res, next) => {
       if (!validPassword) {
         return next(errorHandler(401, "Wrong credentials!"));
       } else {
-        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET );
         const { password: pass, ...rest } = validUser._doc;
+        res.cookie("access_token", token, { httpOnly: false, secure: false, expire: new Date(Date.now()) + 7 * 24 * 60 * 60, path: '/chat' }).status(200).json(rest);
 
-        res.cookie("access_token", token).status(200).json(rest);
+        // res.cookie("access_token", token, {httpOnly: true, secure: false, expire: new Date(Date.now()) + 7 * 24 * 60 * 60}).status(200).json(rest);
       }
     }
   } catch (error) {
