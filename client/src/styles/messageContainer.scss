@@ -8,12 +8,6 @@
   justify-content: stretch;
   overflow: hidden;
 }
-.nameBar {
-  height: $namebar_height;
-  flex-grow: 0;
-  flex-shrink: 0;
-  background-color: $lightGreen;
-}
 .message_box_container {
   flex: 1;
 }

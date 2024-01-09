@@ -2,22 +2,22 @@ import React, { useEffect, useRef } from "react";
 import "../styles/messageContainer.css";
 import useStateValue from "../context/AppContext";
 
-function MessageBox({ chats }) {
+function MessageBox({ messages }) {
   const [{ user }, _] = useStateValue();
   const messageBox = useRef(null);
 
   useEffect(() => {
     messageBox.current.scrollTop = messageBox.current.scrollHeight;
-  }, [chats]);
+  }, [messages]);
 
   return (
     <div className="message_box" ref={messageBox}>
-      {chats ? (
-        chats.map((msg, idx) => {
+      {messages ? (
+        messages.map((msg, idx) => {
           return <Message message={msg} currUserId={user?.userId} key={idx} />;
         })
       ) : (
-        <p>You don't have any chats yet!</p>
+        <p>You don't have any messages yet!</p>
       )}
     </div>
   );

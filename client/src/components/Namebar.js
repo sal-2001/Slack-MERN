@@ -1,9 +1,19 @@
 import React from "react";
+import { getProfileName, getProfilePic } from "../utils/chat";
+import useStateValue from "../context/AppContext";
+import "../styles/namebar.css";
 
-function Namebar({ name }) {
+function Namebar({ chat }) {
+  const [{ user }, dispatch] = useStateValue();
+  if (!chat) return null;
   return (
-    <div>
-      <h2>{name}</h2>
+    <div className="namebar">
+      <img
+        src={getProfilePic(chat, user)}
+        alt="profile"
+        className="namebar_img"
+      />
+      <p className="participantName">{getProfileName(chat, user)}</p>
     </div>
   );
 }

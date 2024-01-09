@@ -7,16 +7,16 @@ import useStateValue from "../context/AppContext";
 import InputBox from "./InputBox";
 import { getAllMessages, sendMessage } from "../services/messages";
 
-function MessageContainer({ socket, chatId }) {
+function MessageContainer({ socket, chat }) {
   const [{ user, isLoggedIn }, dispatch] = useStateValue();
-  const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    if (!socket || !chatId) return;
+    if (!socket || !chat?._id) return;
     // Socketio event for joining a room
-    socket.emit("JOIN_ROOM", chatId);
-    populateChatHistory(chatId);
-  }, [chatId]);
+    socket.emit("JOIN_ROOM", chat?._id);
+    populateChatHistory(chat?._id);
+  }, [chat?._id]);
 
   useEffect(() => {
     if (!socket || !isLoggedIn) return;
@@ -31,7 +31,7 @@ function MessageContainer({ socket, chatId }) {
   const populateChatHistory = async (chatId) => {
     console.log("poulating chat history of ", chatId);
     let messages = await getAllMessages(chatId);
-    setChats(messages);
+    setMessages(messages);
   };
 
   // Sending a new message
@@ -39,7 +39,7 @@ function MessageContainer({ socket, chatId }) {
     let newMessage = {
       content: message,
       sender: user?.userId,
-      chat: chatId,
+      chat: chat?._id,
     };
     let msg = await sendMessage(newMessage);
     socket.emit("NEW_MESSAGE_SENT", msg);
@@ -48,18 +48,16 @@ function MessageContainer({ socket, chatId }) {
 
   // Function for pushing message to the chat list
   const addMessageToChat = (message) => {
-    setChats((chats) => {
-      return [...chats, message];
+    setMessages((messages) => {
+      return [...messages, message];
     });
   };
 
   return (
     <div className="message_container">
-      <div className="nameBar">
-        <Namebar />
-      </div>
+      <Namebar chat={chat} />
       <div className="message_box_container">
-        <MessageBox chats={chats} />
+        <MessageBox messages={messages} />
       </div>
       <InputBox sendMessage={sendMessageHandler} />
     </div>

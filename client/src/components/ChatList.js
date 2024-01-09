@@ -5,7 +5,8 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import "../styles/chatlist.css";
 import useStateValue from "../context/AppContext";
 import { getUserChats } from "../services/chat";
-export default function ChatList() {
+
+export default function ChatList({ selectChat }) {
   const [{ user }, dispatch] = useStateValue();
   const [userchats, setUserChats] = useState([]);
 
@@ -34,7 +35,9 @@ export default function ChatList() {
       <div className="chatList">
         {userchats &&
           userchats.length > 0 &&
-          userchats.map((chat) => <Participant key={chat._id} chat={chat} />)}
+          userchats.map((chat) => (
+            <Participant key={chat._id} chat={chat} selectChat={selectChat} />
+          ))}
       </div>
     </div>
   );

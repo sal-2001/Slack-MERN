@@ -1,0 +1,17 @@
+.namebar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 45px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #d5f8e5;
+  padding: 0 20px;
+}
+
+.namebar_img {
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+  justify-content: start;
+}/*# sourceMappingURL=namebar.css.map */
