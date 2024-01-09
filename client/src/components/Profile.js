@@ -47,7 +47,7 @@ function Profile({ closeProfile }) {
           userUpdate({ ...formData, photo: downloadURL }, user?._id)
             .then((data) => {
               setFilePerc(0);
-              addUser(dispatch, { ...data, photo: data.avatar });
+              addUser(dispatch, data);
               setFormData({ ...formData, photo: data.avatar });
             })
             .catch((error) => console.log(error));
