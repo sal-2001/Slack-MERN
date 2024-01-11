@@ -42,10 +42,8 @@ export default function ChatList({ selectChat }) {
           addUserToChat(data._id)
             .then(() => {
               console.log("successfully added user");
-              setAddUser(false);
-              setAddUserError(null);
+              closeAddUserModal();
               handleGetChats();
-              setUserEmail("");
             })
             .catch((error) => console.log(error));
         } else {
@@ -64,14 +62,21 @@ export default function ChatList({ selectChat }) {
             ...groupData,
             users: [...groupData?.users, data._id],
           });
-          setAddUserError(null);
           setUserEmail("");
-          handleGetChats();
+          setAddUserError(null);
         } else {
           setAddUserError("User not found");
         }
       })
       .catch((error) => setAddUserError(error));
+  };
+  const closeAddUserModal = () => {
+    setUserEmail("");
+    setAddUser(false);
+    setAddUserError(null);
+    setgroupName("");
+    setGroupUsers([]);
+    setGroupData(groupFreshData);
   };
   const handleCreateGroup = async (e) => {
     e.preventDefault();
@@ -81,11 +86,8 @@ export default function ChatList({ selectChat }) {
     })
       .then((data) => {
         console.log("group created successfully", data);
-        setAddUser(false);
-        setAddUserError(null);
-        setgroupName("");
-        setGroupUsers([]);
-        setGroupData(groupFreshData);
+        closeAddUserModal();
+        handleGetChats();
       })
       .catch((error) => console.log(error));
   };
@@ -110,9 +112,29 @@ export default function ChatList({ selectChat }) {
       <div className="chatList">
         {userchats &&
           userchats.length > 0 &&
-          userchats.map((chat) => (
-            <Participant key={chat._id} chat={chat} selectChat={selectChat} />
-          ))}
+          (isChat
+            ? userchats.map((chat) => {
+                return chat.isGroupChat ? (
+                  <></>
+                ) : (
+                  <Participant
+                    key={chat._id}
+                    chat={chat}
+                    selectChat={selectChat}
+                  />
+                );
+              })
+            : userchats.map((chat) => {
+                return !chat.isGroupChat ? (
+                  <></>
+                ) : (
+                  <Participant
+                    key={chat._id}
+                    chat={chat}
+                    selectChat={selectChat}
+                  />
+                );
+              }))}
       </div>
       <div className="addIconContainer" onClick={() => setAddUser(true)}>
         <AddIcon className="addIcon" />
@@ -120,10 +142,7 @@ export default function ChatList({ selectChat }) {
       {addUser &&
         (isChat ? (
           <form className="addUserContainer">
-            <div
-              className="closeIconContainer"
-              onClick={() => setAddUser(false)}
-            >
+            <div className="closeIconContainer" onClick={closeAddUserModal}>
               <CloseIcon className="closeIcon" />
             </div>
             <label for="email" className="addUserLabel">
@@ -146,10 +165,7 @@ export default function ChatList({ selectChat }) {
           </form>
         ) : (
           <form className="addUserContainer">
-            <div
-              className="closeIconContainer"
-              onClick={() => setAddUser(false)}
-            >
+            <div className="closeIconContainer" onClick={closeAddUserModal}>
               <CloseIcon className="closeIcon" />
             </div>
             <input
