@@ -16,13 +16,15 @@ export default function OAuth() {
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
+      console.log('avatar',result.user.photoURL);
       const userData = {
         name: result.user.displayName,
         email: result.user.email,
-        photo: result.user.photoURL,
+        avatar: result.user.photoURL,
       };
       googleSignIn(userData)
         .then((data) => {
+          localStorage.setItem("token", data.token);
           addUser(dispatch, data);
         })
         .then(() => navigate("/chat"))

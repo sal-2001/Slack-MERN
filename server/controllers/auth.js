@@ -57,7 +57,7 @@ const google = async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        avatar: req.body.photo,
+        avatar: req.body.avatar,
       });
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;

@@ -11,6 +11,7 @@ export const signUpUser = async (data) => {
       console.log(res.message);
       return;
     }
+    
     return res.data;
   } catch (error) {
     console.log(error);
