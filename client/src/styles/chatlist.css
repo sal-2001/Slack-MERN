@@ -120,6 +120,18 @@
   gap: 5px;
 }
 
+.groupUsersList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 50px;
+  overflow: auto;
+}
+
+.userListEmail {
+  font-size: 12px;
+}
+
 .emailAddIcon {
   font-size: 22px;
   color: #59e4a8;
