@@ -11,7 +11,7 @@ export const signUpUser = async (data) => {
       console.log(res.message);
       return;
     }
-    
+
     return res.data;
   } catch (error) {
     console.log(error);
@@ -83,6 +83,20 @@ export const getUser = async () => {
       return;
     }
     return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const findUser = async (email) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/api/user/getdetails?email=${email}`);
+    if (res.success === false) {
+      console.log(res.message);
+      return;
+    }
+    return res?.data;
   } catch (error) {
     console.log(error);
   }

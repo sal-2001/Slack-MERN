@@ -8,6 +8,7 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import useStateValue from "../context/AppContext";
 import { getUserChats } from "../services/chat";
 import AddIcon from "@mui/icons-material/Add";
+import { findUser } from "../services/user";
 
 export default function ChatList({ selectChat }) {
   const fileRef = useRef(null);
@@ -15,7 +16,8 @@ export default function ChatList({ selectChat }) {
   const [userchats, setUserChats] = useState([]);
   const [addUser, setAddUser] = useState(false);
   const [isChat, setIsChat] = useState(false);
-
+  const [userEmail, setUserEmail] = useState("");
+  const [addUserError,setAddUserError] = useState(null); 
   useEffect(() => {
     if (user?._id) handleGetChats();
   }, [user?._id]);
@@ -26,6 +28,20 @@ export default function ChatList({ selectChat }) {
       setUserChats(data);
     });
   };
+  const handleAddUser = async(e) => {
+    e.preventDefault();
+    findUser(userEmail).then((data)=>{
+      if(data)
+      {
+        setAddUserError(null);
+
+      }
+      else
+      {
+        setAddUserError('User not found');
+      }
+    }).catch(error=>setAddUserError(error));
+  }
   return (
     <div className="chatSection">
       <div className="chatListHeader">
@@ -71,8 +87,12 @@ export default function ChatList({ selectChat }) {
               id="email"
               className="addUserInput"
               placeholder="Enter user email..."
+              onChange={(e)=>setUserEmail(e.target.value)}
             />
-            <button className="addUserButton">Add User</button>
+            <button className="addUserButton" onClick={handleAddUser}>Add User</button>
+            {
+              addUserError && <span className="addUserError">{addUserError}</span>
+            }
           </form>
         ) : (
           <form className="addUserContainer">
@@ -114,6 +134,7 @@ export default function ChatList({ selectChat }) {
                 id="email"
                 className="addUserInput"
                 placeholder="Enter user email..."
+                onChange={(e)=>setUserEmail(e.target.value)}
               />
               <AddCircleOutlinedIcon className="emailAddIcon" />
             </div>

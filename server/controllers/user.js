@@ -44,16 +44,16 @@ const getUser = async (req, res, next) => {
 };
 
 const getUserByEmail = async (req, res, next) => {
-  let email = req.query.email;
+  console.log('req',req);
   try {
-    const user = await User.findOne({ email: email }, { password: 0 });
+    const user = await User.findOne({email: req.query.email});
     console.log("user is : ", user);
     if (!user) {
       return next(errorHandler(404, "User not found!"));
     }
-    // const { password: pass, ...rest } = user._doc;
-    //pass user details except the password
-    res.status(200).json(user);
+    const { password: pass, ...rest } = user._doc;
+    // pass user details except the password
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }

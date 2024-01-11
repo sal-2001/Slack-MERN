@@ -9,5 +9,5 @@ const router = express.Router();
 
 router.post("/update/", checkAuth, updateUser);
 router.get("/", checkAuth, getUser);
-router.get("/getdetails", checkAuth, getUserByEmail);
+router.get("/getdetails", getUserByEmail);
 module.exports = router;
