@@ -112,29 +112,13 @@ export default function ChatList({ selectChat }) {
       <div className="chatList">
         {userchats &&
           userchats.length > 0 &&
-          (isChat
-            ? userchats.map((chat) => {
-                return chat.isGroupChat ? (
-                  <></>
-                ) : (
-                  <Participant
-                    key={chat._id}
-                    chat={chat}
-                    selectChat={selectChat}
-                  />
-                );
-              })
-            : userchats.map((chat) => {
-                return !chat.isGroupChat ? (
-                  <></>
-                ) : (
-                  <Participant
-                    key={chat._id}
-                    chat={chat}
-                    selectChat={selectChat}
-                  />
-                );
-              }))}
+          userchats.map((chat) => {
+            return chat.isGroupChat === isChat ? (
+              <></>
+            ) : (
+              <Participant key={chat._id} chat={chat} selectChat={selectChat} />
+            );
+          })}
       </div>
       <div className="addIconContainer" onClick={() => setAddUser(true)}>
         <AddIcon className="addIcon" />

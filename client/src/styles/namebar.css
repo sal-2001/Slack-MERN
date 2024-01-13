@@ -7,6 +7,7 @@
   flex-shrink: 0;
   background-color: #d5f8e5;
   padding: 0 20px;
+  position: relative;
 }
 
 .namebar_img {
@@ -14,4 +15,65 @@
   width: 40px;
   border-radius: 100px;
   justify-content: start;
+}
+
+.moreIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.userOptionsContainer {
+  position: absolute;
+  width: 180px;
+  min-height: 150px;
+  background-color: lightgray;
+  top: 8%;
+  right: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.userOptionImage {
+  height: 70px;
+  width: 70px;
+  border-radius: 100px;
+}
+
+.groupMembers {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  max-height: 100px;
+  overflow: auto;
+}
+
+.groupMemberItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px;
+  gap: 7px;
+  border-bottom: white 1px solid;
+}
+
+.groupMembersImage {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+}
+
+.groupMembersName {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.groupAdmin {
+  font-size: 10px;
+  color: #007441;
 }/*# sourceMappingURL=namebar.css.map */
